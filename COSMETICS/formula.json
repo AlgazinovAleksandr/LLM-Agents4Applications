@@ -1,0 +1,75 @@
+{
+  "ProductName": "Apex Cleanse - Men's Premium Clarifying Shampoo",
+  "Description": "Apex Cleanse is a premium clarifying shampoo designed specifically for men with oily hair. It deeply cleanses the scalp and hair, removing excess oil and impurities without stripping natural moisture. Infused with a sophisticated masculine scent of cedarwood and bergamot, it leaves hair feeling fresh, light, and revitalized. The rich, deep blue color enhances the premium experience. Ideal for active men seeking a reliable daily cleanser that combats oiliness while providing a luxurious feel.",
+  "Ingredients": [
+    {
+      "Ingredient": "Aqua",
+      "Function": "Solvent base",
+      "Concentration": "To 100%"
+    },
+    {
+      "Ingredient": "Sodium Lauryl Sulfoacetate",
+      "Function": "Gentle surfactant",
+      "Concentration": "12%"
+    },
+    {
+      "Ingredient": "Cocamidopropyl Betaine",
+      "Function": "Foam booster, mild cleanser",
+      "Concentration": "5%"
+    },
+    {
+      "Ingredient": "Glycerin",
+      "Function": "Humectant, moisture retention",
+      "Concentration": "3%"
+    },
+    {
+      "Ingredient": "Salicylic Acid",
+      "Function": "Exfoliant, oil control",
+      "Concentration": "1.5%"
+    },
+    {
+      "Ingredient": "Caffeine",
+      "Function": "Stimulates scalp, reduces oil production",
+      "Concentration": "0.5%"
+    },
+    {
+      "Ingredient": "Cedarwood Essential Oil",
+      "Function": "Fragrance, antiseptic",
+      "Concentration": "0.3%"
+    },
+    {
+      "Ingredient": "Bergamot Essential Oil",
+      "Function": "Fragrance, uplifting scent",
+      "Concentration": "0.2%"
+    },
+    {
+      "Ingredient": "Panthenol (Pro-Vitamin B5)",
+      "Function": "Conditioner, strengthens hair",
+      "Concentration": "1%"
+    },
+    {
+      "Ingredient": "Blue 1 (CI 42090)",
+      "Function": "Colorant",
+      "Concentration": "0.001%"
+    },
+    {
+      "Ingredient": "Citric Acid",
+      "Function": "pH adjuster",
+      "Concentration": "q.s."
+    },
+    {
+      "Ingredient": "Sodium Benzoate",
+      "Function": "Preservative",
+      "Concentration": "0.5%"
+    },
+    {
+      "Ingredient": "Potassium Sorbate",
+      "Function": "Preservative",
+      "Concentration": "0.2%"
+    }
+  ],
+  "InstructionsForUse": "Wet hair thoroughly. Apply a quarter-sized amount of shampoo to palms, lather, and massage into scalp and hair for 1-2 minutes. Rinse completely. For best results, use daily or as needed.",
+  "Packaging": "Sleek, matte black plastic bottle with a pump dispenser for easy use and minimal waste. Accented with silver text and a subtle blue tint to reflect the product color. Bottle size: 250ml. Outer packaging: Recyclable cardboard box with premium finish.",
+  "SafetyAndRegulatoryInformation": "For external use only. Avoid contact with eyes. If irritation occurs, discontinue use. Keep out of reach of children. Comply with local cosmetic regulations (e.g., EU Cosmetics Regulation, FDA guidelines). Patch test recommended for sensitive skin.",
+  "AdditionalNotes": "Formula is sulfate-free for gentler cleansing. The fragrance blend is long-lasting but not overpowering. Suitable for all hair types, especially effective for oily hair. Store in a cool, dry place."
+}
