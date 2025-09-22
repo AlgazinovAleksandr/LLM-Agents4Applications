@@ -1,0 +1,70 @@
+{
+  "productName": "Oil-Free Sunshield Moisturizer SPF 30",
+  "description": "A lightweight, non-greasy daytime moisturizer specifically formulated for oily skin. It provides broad-spectrum SPF 30 protection, hydrates without clogging pores, and helps control shine throughout the day. Ideal for individuals with oily or combination skin seeking sun protection and mattifying benefits.",
+  "ingredients": [
+    {
+      "name": "Water (Aqua)",
+      "function": "Solvent",
+      "concentration": "q.s. to 100%"
+    },
+    {
+      "name": "Homosalate",
+      "function": "UVB filter",
+      "concentration": "8%"
+    },
+    {
+      "name": "Octinoxate",
+      "function": "UVB filter",
+      "concentration": "7.5%"
+    },
+    {
+      "name": "Zinc Oxide",
+      "function": "UVA/UVB filter (mineral)",
+      "concentration": "5%"
+    },
+    {
+      "name": "Niacinamide",
+      "function": "Oil control, pore refinement",
+      "concentration": "4%"
+    },
+    {
+      "name": "Dimethicone",
+      "function": "Silicone-based emollient, lightweight texture",
+      "concentration": "3%"
+    },
+    {
+      "name": "Glycerin",
+      "function": "Humectant",
+      "concentration": "3%"
+    },
+    {
+      "name": "Cyclopentasiloxane",
+      "function": "Volatile silicone for quick absorption",
+      "concentration": "2%"
+    },
+    {
+      "name": "Willow Bark Extract",
+      "function": "Natural astringent, anti-inflammatory",
+      "concentration": "1%"
+    },
+    {
+      "name": "Tocopheryl Acetate",
+      "function": "Antioxidant",
+      "concentration": "0.5%"
+    },
+    {
+      "name": "Phenoxyethanol",
+      "function": "Preservative",
+      "concentration": "0.5%"
+    },
+    {
+      "name": "Fragrance (optional)",
+      "function": "Scent",
+      "concentration": "0.1%"
+    }
+  ],
+  "instructionsForUse": "Apply evenly to face and neck every morning after cleansing. Reapply every 2 hours if exposed to sun for extended periods or after swimming/sweating. For best results, allow to absorb fully before applying makeup.",
+  "packaging": "Airless pump bottle (50 ml) with a matte finish and blue/white color scheme to convey freshness and oil-control benefits. Compact and travel-friendly design.",
+  "safetyAndRegulatoryInformation": "For external use only. Avoid contact with eyes. Discontinue use if irritation occurs. Keep out of reach of children. Complies with FDA sunscreen monograph and EU cosmetic regulations. SPF tested according to COLIPA guidelines.",
+  "additionalNotes": "Formulated without oils, heavy emollients, or comedogenic ingredients. Suitable for sensitive skin. Pair with an oil-free cleanser for optimal results. Store in a cool, dry place away from direct sunlight."
+}

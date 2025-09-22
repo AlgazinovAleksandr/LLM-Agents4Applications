@@ -1,0 +1,12 @@
+autogen
+openai
+fastapi
+uvicorn[standard]
+python-dotenv
+httpx
+
+# Optional - useful for running under Gunicorn in production (if you choose that route)
+gunicorn
+# Dev / testing
+pytest
+pytest-cov
