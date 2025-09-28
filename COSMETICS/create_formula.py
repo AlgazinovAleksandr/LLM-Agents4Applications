@@ -151,7 +151,7 @@ Return the formula in a structured format, preferably valid JSON. After the form
 
 
 # --- Public API: generate_formula ---
-def generate_formula(user_message: str, save_file: bool = False, save_name='formula.json') -> Dict[str, Any]:
+def generate_formula(user_message: str, save_file: bool = False, save_name: str = None) -> Dict[str, Any]:
     """
     Run the agent flow to generate a cosmetic formula from `user_message`.
 
@@ -199,12 +199,21 @@ def generate_formula(user_message: str, save_file: bool = False, save_name='form
             parsed = _parse_json_string(json_like)
             result = {"parsed": True, "data": parsed, "raw": raw, "error": None}
             if save_file:
+                # Generate filename with timestamp if not provided
+                if save_name is None:
+                    from datetime import datetime
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    save_name = f"formula_{timestamp}.json"
+                
                 # write to disk using safe filename
                 try:
                     with open(save_name, "w", encoding="utf-8") as f:
                         json.dump(parsed, f, indent=2, ensure_ascii=False)
+                    result["saved_file"] = save_name
+                    logger.info(f"Formula saved to {save_name}")
                 except Exception as e:
-                    logger.warning("Failed saving parsed result to formula.json: %s", e)
+                    logger.warning(f"Failed saving parsed result to {save_name}: %s", e)
+                    result["save_error"] = str(e)
             return result
         except Exception as parse_exc:
             # Parsing failed, return raw output and parsing error (but keep the raw text)
