@@ -1,1 +1,354 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Formula Generator</title>
+    <style>
+      :root{
+        --bg: #ffffff; --card: #f8f9fa; --muted: #6c757d; --text: #212529; --accent: #007bff; --accent-2: #0056b3; --border: #dee2e6; --ok: #28a745; --error:#dc3545;
+        --radius: 14px; --radius-sm: 10px; --shadow: 0 2px 10px rgba(0,0,0,.1);
+      }
+      *{ box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; min-height: 100vh; }
+      .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+      .header { text-align: center; margin-bottom: 40px; }
+      .logo { width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); margin: 0 auto 20px; }
+      h1 { font-size: 32px; margin: 0 0 12px; font-weight: 700; letter-spacing: -0.5px; }
+      .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 8px; }
+      .description { font-size: 16px; color: var(--muted); line-height: 1.5; }
+      .card { background: var(--card); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px; margin-bottom: 24px; }
+      .form-group { margin-bottom: 24px; }
+      label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+      textarea { width: 100%; background: #ffffff; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; font-size: 16px; line-height: 1.5; resize: vertical; min-height: 120px; }
+      textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,123,255,.1); }
+      .checkbox-group { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+      .checkbox-group input[type="checkbox"] { transform: scale(1.2); }
+      .checkbox-group label { margin: 0; font-weight: 400; color: var(--muted); }
+      .btn { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color:white; border:none; padding: 16px 32px; border-radius: var(--radius-sm); cursor:pointer; font-size: 16px; font-weight: 600; box-shadow: var(--shadow); transition: transform 0.2s; }
+      .btn:hover { transform: translateY(-2px); }
+      .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+      .status { font-size: 14px; margin-left: 12px; }
+      .status.loading { color: var(--accent); }
+      .status.success { color: var(--ok); }
+      .status.error { color: var(--error); }
+      .output { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; max-height: 600px; overflow: auto; }
+      .output:empty { display: none; }
+      .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+      .output-title { font-size: 18px; font-weight: 600; margin: 0; }
+      .clear-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+      .clear-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,123,255,.1); }
+      
+      /* Clean readable styling */
+      .formula-section { margin-bottom: 24px; }
+      .section-title { color: var(--accent); font-size: 18px; font-weight: 700; margin: 0 0 12px 0; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+      .section-content { font-size: 15px; line-height: 1.6; color: var(--text); }
+      .content-item { margin-bottom: 12px; }
+      .ingredient-item { background: rgba(0,123,255,.1); border-left: 3px solid var(--accent); padding: 8px 12px; margin-bottom: 8px; border-radius: 0 6px 6px 0; }
+      .ingredient-item strong { color: var(--accent); }
+      .list-item { margin-bottom: 6px; padding-left: 12px; position: relative; }
+      .list-item:before { content: "•"; color: var(--accent); position: absolute; left: 0; }
+      
+      /* Fallback JSON styling for errors */
+      .json-container { font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace; font-size: 14px; line-height: 1.6; }
+      .json-key { color: #79c0ff; font-weight: 600; }
+      .json-string { color: #a5d6ff; }
+      .json-number { color: #ff7b72; }
+      .json-boolean { color: #ffa657; font-weight: 600; }
+      .json-null { color: #8b949e; font-style: italic; }
+      .json-bracket { color: #f0f6fc; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo"></div>
+        <h1>LAB AI Cosmetics Formula Generator</h1>
+        <p class="subtitle">AI-Powered Cosmetic Product Development</p>
+        <p class="description">Lab AI helps organisations design, develop, produce, and deliver fully customized products across multiple industries with end-to-end support and formulation.</p>
+      </div>
+
+      <div class="card">
+        <form id="form">
+          <div class="form-group">
+            <label for="prompt">What kind of cosmetic product would you like to create?</label>
+            <textarea id="prompt" placeholder="Example: Lightweight daytime moisturizer for oily skin with SPF 30, suitable for sensitive skin, with natural ingredients and eco-friendly packaging"></textarea>
+          </div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="saveFile" />
+            <label for="saveFile">Download formula as text file</label>
+          </div>
+
+          <div style="display: flex; align-items: center;">
+            <button type="submit" class="btn" id="submitBtn">Generate Formula</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" id="outputCard" style="display: none;">
+        <div class="output-header">
+          <h3 class="output-title">Generated Formula</h3>
+          <button class="clear-btn" id="clearBtn">Clear</button>
+        </div>
+        <div id="output" class="output"></div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('form');
+      const submitBtn = document.getElementById('submitBtn');
+      const status = document.getElementById('status');
+      const output = document.getElementById('output');
+      const outputCard = document.getElementById('outputCard');
+      const clearBtn = document.getElementById('clearBtn');
+
+      // Clean, readable formatter
+      function formatReadable(obj) {
+        if (!obj || typeof obj !== 'object') return obj;
+        
+        let html = '';
+        
+        function formatValue(value, level = 0) {
+          if (value === null || value === undefined) return '';
+          if (typeof value === 'string') return value;
+          if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+          
+          if (Array.isArray(value)) {
+            if (value.length === 0) return '';
+            let result = '';
+            value.forEach((item, i) => {
+              if (typeof item === 'object' && item !== null) {
+                // Handle ingredient objects
+                if (item.Ingredient || item.ingredient) {
+                  result += `<div class="ingredient-item">`;
+                  result += `<strong>${item.Ingredient || item.ingredient}</strong>`;
+                  if (item.Function || item.function) {
+                    result += ` - ${item.Function || item.function}`;
+                  }
+                  if (item.Concentration || item.concentration) {
+                    result += ` (${item.Concentration || item.concentration})`;
+                  }
+                  result += `</div>`;
+                } else {
+                  result += `<div class="list-item">${formatValue(item, level + 1)}</div>`;
+                }
+              } else {
+                result += `<div class="list-item">${formatValue(item, level + 1)}</div>`;
+              }
+            });
+            return result;
+          }
+          
+          if (typeof value === 'object') {
+            let result = '';
+            Object.keys(value).forEach(key => {
+              const val = value[key];
+              if (val !== null && val !== undefined && val !== '') {
+                result += `<div class="content-item">${formatValue(val, level + 1)}</div>`;
+              }
+            });
+            return result;
+          }
+          
+          return String(value);
+        }
+        
+        // Format each section
+        Object.keys(obj).forEach(sectionName => {
+          const sectionData = obj[sectionName];
+          if (sectionData && Object.keys(sectionData).length > 0) {
+            html += `<div class="formula-section">`;
+            html += `<h3 class="section-title">${sectionName}</h3>`;
+            html += `<div class="section-content">`;
+            
+            let hasContent = false;
+            Object.keys(sectionData).forEach(key => {
+              const value = sectionData[key];
+              if (value !== null && value !== undefined && value !== '') {
+                const formattedValue = formatValue(value);
+                if (formattedValue && formattedValue.trim()) {
+                  html += formattedValue;
+                  hasContent = true;
+                }
+              }
+            });
+            
+            // If no content was added, add a placeholder
+            if (!hasContent) {
+              html += `<div class="content-item">No information available for this section.</div>`;
+            }
+            
+            html += `</div></div>`;
+          }
+        });
+        
+        return html;
+      }
+
+      // Download file functionality
+      function downloadTextFile(htmlContent, filename) {
+        // Convert HTML to well-formatted plain text
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        
+        let textContent = '';
+        
+        // Process each section
+        const sections = tempDiv.querySelectorAll('.formula-section');
+        sections.forEach((section, index) => {
+          const title = section.querySelector('.section-title');
+          const content = section.querySelector('.section-content');
+          
+          if (title) {
+            // Add section title with spacing
+            if (index > 0) textContent += '\n\n';
+            textContent += title.textContent.trim() + '\n';
+            textContent += '='.repeat(title.textContent.trim().length) + '\n\n';
+            
+            if (content) {
+              // Get all text content from the section, preserving structure
+              let sectionText = '';
+              
+              // Process ingredient items specially
+              const ingredientItems = content.querySelectorAll('.ingredient-item');
+              ingredientItems.forEach(item => {
+                const itemText = item.textContent.trim();
+                if (itemText) {
+                  sectionText += '• ' + itemText + '\n';
+                }
+              });
+              
+              // Process list items
+              const listItems = content.querySelectorAll('.list-item');
+              listItems.forEach(item => {
+                const itemText = item.textContent.trim();
+                if (itemText) {
+                  sectionText += '• ' + itemText + '\n';
+                }
+              });
+              
+              // Process content items (general content)
+              const contentItems = content.querySelectorAll('.content-item');
+              contentItems.forEach(item => {
+                const itemText = item.textContent.trim();
+                if (itemText) {
+                  sectionText += itemText + '\n\n';
+                }
+              });
+              
+              // If no structured items found, get all text content
+              if (!sectionText) {
+                const allText = content.textContent || content.innerText || '';
+                if (allText.trim()) {
+                  sectionText = allText.trim() + '\n\n';
+                }
+              }
+              
+              textContent += sectionText;
+            } else {
+              // If no content div, try to get text from the section itself
+              const sectionText = section.textContent || section.innerText || '';
+              if (sectionText.trim()) {
+                textContent += sectionText.trim() + '\n\n';
+              }
+            }
+          }
+        });
+        
+        // If no sections found, fall back to simple text extraction
+        if (!textContent) {
+          textContent = tempDiv.textContent || tempDiv.innerText || '';
+          // Add some basic formatting
+          textContent = textContent.replace(/\n\s*\n/g, '\n\n');
+        }
+        
+        const blob = new Blob([textContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const prompt = document.getElementById('prompt').value.trim();
+        const saveFile = document.getElementById('saveFile').checked;
+        
+        if (!prompt) {
+          status.textContent = 'Please enter a description';
+          status.className = 'status error';
+          return;
+        }
+
+        // Update UI
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Generating...';
+        status.textContent = 'Creating your formula...';
+        status.className = 'status loading';
+        outputCard.style.display = 'block';
+        output.textContent = '';
+
+        try {
+          const res = await fetch('/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              message: prompt, 
+              save_file: false 
+            })
+          });
+          
+          const data = await res.json();
+          
+          if (res.ok && data.ok) {
+            let statusMsg = 'Formula generated successfully!';
+            status.className = 'status success';
+            
+            // Use formatted data if available, otherwise fall back to raw data
+            const displayData = data.result && data.result.formatted_data ? data.result.formatted_data : 
+                               (data.result && data.result.data ? data.result.data : data.result);
+            output.innerHTML = formatReadable(displayData);
+            
+            // Handle file download if requested
+            if (saveFile) {
+              const timestamp = new Date().toISOString().slice(0, 19).replace(/[:-]/g, '');
+              const filename = `cosmetic_formula_${timestamp}.txt`;
+              downloadTextFile(output.innerHTML, filename);
+              statusMsg += ' (File downloaded)';
+            }
+            
+            status.textContent = statusMsg;
+          } else {
+            status.textContent = 'Error generating formula';
+            status.className = 'status error';
+            output.innerHTML = `<div class="json-container">${JSON.stringify(data, null, 2)}</div>`;
+          }
+        } catch (err) {
+          status.textContent = 'Network error';
+          status.className = 'status error';
+          output.textContent = 'Request failed: ' + (err.message || err);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Generate Formula';
+        }
+      };
+
+      clearBtn.onclick = () => {
+        output.textContent = '';
+        outputCard.style.display = 'none';
+        status.textContent = '';
+        status.className = 'status';
+      };
+    </script>
+  </body>
+</html>
+
 
