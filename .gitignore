@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 constants.py
+notes.md
 .DS_Store
+formula_examples
 __pycache__/
 *.py[codz]
 *$py.class
