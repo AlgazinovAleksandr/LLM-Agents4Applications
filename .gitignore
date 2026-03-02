@@ -125,6 +125,7 @@ ipython_config.py
 posts.md
 inspiration.md
 objectives.md
+detailed_objectives.md
 
 # pixi
 #   Similar to Pipfile.lock, it is generally recommended to include pixi.lock in version control.
